@@ -1,264 +1,760 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>StratusPay Explorer — Demo</title>
+  <title>StratusPay Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
   <style>
-    :root{--bg:#f4f7fb;--card:#ffffff;--accent:#0b69ff;--muted:#6b7280;--glass:rgba(11,102,255,0.06)}
-    body{font-family:Inter,Segoe UI,system-ui,Arial;margin:24px;background:linear-gradient(180deg,#f7fbff 0%,var(--bg) 100%);color:#0f172a}
-    .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 8px 30px rgba(8,18,40,0.06);max-width:1100px;margin:0 auto}
-    .header{display:flex;justify-content:space-between;gap:16px;align-items:center}
-    h1{margin:0;font-size:1.6rem}
-    .muted{color:var(--muted);margin:4px 0}
-    .small{font-size:12px;color:var(--muted);}
-    input,select{width:100%;padding:10px;margin-top:6px;border:1px solid #e6eef8;background:#fff;border-radius:8px;box-shadow:inset 0 1px 0 rgba(16,24,40,0.02)}
-    label{display:block;margin-top:10px;font-weight:600;color:#0f172a}
-    .main-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
-    .panel{background:linear-gradient(180deg,rgba(255,255,255,0.6),#fff);padding:16px;border-radius:10px;border:1px solid rgba(15,23,42,0.03)}
-    .form-panel .fields{display:flex;flex-direction:column;gap:12px}
-    .toolbar{display:flex;gap:8px;align-items:center}
-    .toolbar select{width:auto}
-    .row{display:flex;gap:12px}
-    .col{flex:1}
-    .controls{display:flex;gap:8px;margin-top:8px}
-    button{padding:10px 14px;border-radius:8px;border:0;cursor:pointer;background:var(--accent);color:white}
-    .ghost{background:transparent;border:1px solid rgba(15,23,42,0.06);color:var(--accent);padding:8px 10px}
-    .secondary{background:#eef2ff;color:#0b69ff}
-    .output-top{display:flex;justify-content:space-between;align-items:center}
-    .output-body{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-    .box{background:#0b1220;color:#e6eef8;padding:12px;border-radius:8px;min-height:220px;overflow:auto}
-    .note{font-size:13px;color:var(--muted);margin-top:10px}
-    pre{white-space:pre-wrap}
-    .actions input{width:360px}
-    @media(max-width:900px){.main-grid{grid-template-columns:1fr}.actions input{width:100%}}
+    :root {
+      --bg: #000000;
+      --fg: #ffffff;
+      --surface: #111111;
+      --border: #333333;
+      --accent: #0070f3;
+      /* Vercel Blue */
+      --accent-glow: rgba(0, 112, 243, 0.5);
+      --success: #00e054;
+      --warning: #f5a623;
+      --error: #ff0000;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #444;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #666;
+    }
+
+    /* Layout Utilities */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .flex {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .flex-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .center {
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Typography */
+    h1 {
+      font-size: 4rem;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      font-weight: 800;
+      background: linear-gradient(180deg, #fff 0%, #888 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    h2 {
+      font-size: 2rem;
+      letter-spacing: -0.02em;
+      margin: 0 0 16px 0;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+    }
+
+    p.lead {
+      font-size: 1.25rem;
+      color: #888;
+      max-width: 600px;
+      margin: 0 auto 40px auto;
+    }
+
+    @media (max-width: 768px) {
+      p.lead {
+        font-size: 1rem;
+        margin-bottom: 24px;
+      }
+    }
+
+    .text-muted {
+      color: #888;
+      font-size: 0.875rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 120px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 60px 0;
+      }
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 24px;
+      height: 48px;
+      border-radius: 999px;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--fg);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      background: #dedede;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border-color: #333;
+      color: #ccc;
+    }
+
+    .btn-secondary:hover {
+      border-color: #fff;
+      color: #fff;
+    }
+
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin: 60px 0;
+    }
+
+    @media (max-width: 768px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+        /* Force single column on mobile */
+        margin: 40px 0;
+        gap: 16px;
+      }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px -10px rgba(0, 112, 243, 0.3);
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      background: #222;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 1.5rem;
+    }
+
+    /* Playground */
+    .playground {
+      border-top: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--bg) 0%, #0a0a0a 100%);
+      padding: 80px 0;
+    }
+
+    .interface {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 900px) {
+      .interface {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+
+    .sidebar {
+      padding: 24px;
+      border-right: 1px solid var(--border);
+      background: #080808;
+    }
+
+    .main-view {
+      padding: 0;
+      background: #111;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Form Elements */
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      color: #888;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    input,
+    select {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-family: var(--font-font-sans);
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .col {
+      flex: 1;
+    }
+
+    /* Code View */
+    .code-header {
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0d0d0d;
+    }
+
+    .tab {
+      font-size: 0.8rem;
+      color: #888;
+      font-family: var(--font-mono);
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #333;
+    }
+
+    .dot.active {
+      background: var(--success);
+      box-shadow: 0 0 8px var(--success);
+    }
+
+    .code-content {
+      flex: 1;
+      padding: 24px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: #a5d6ff;
+      overflow: auto;
+      max-height: 500px;
+    }
+
+    .json-key {
+      color: #7ee787;
+    }
+
+    .json-string {
+      color: #a5d6ff;
+    }
+
+    .json-number {
+      color: #79c0ff;
+    }
+
+    .json-boolean {
+      color: #ff7b72;
+    }
+
+    /* Floating functional bar */
+    .action-bar {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      background: #0d0d0d;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* Config Bar */
+    .config-bar {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #222;
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 112, 243, 0.4);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(0, 112, 243, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 112, 243, 0);
+      }
+    }
+
+    .animate-pulse {
+      animation: pulse 2s infinite;
+    }
+
+    .highlight-change {
+      animation: flash 1s ease;
+    }
+
+    @keyframes flash {
+      0% {
+        background-color: rgba(0, 112, 243, 0.2);
+      }
+
+      100% {
+        background-color: transparent;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <div class="card">
-    <div class="header">
-      <div>
-        <h1>StratusPay Explorer</h1>
-        <p class="muted">Interactive demo — call the hosted StratusPay API to explore payroll calculations.</p>
-      </div>
-      <div class="actions">
-        <label class="small">API Base URL</label>
-        <input id="apiBase" value="https://app-stratuspayapi-prototype-a8bhacf4dqhtgxag.ukwest-01.azurewebsites.net" />
-      </div>
+
+  <!-- Navigation (Visual only) -->
+  <nav class="container flex" style="height: 80px; justify-content: space-between;">
+    <div class="flex">
+      <div style="width: 24px; height: 24px; background: white; border-radius: 50%;"></div> <!-- Logo placeholder -->
+      <span style="font-weight: 700; font-size: 1.1rem;">StratusPay</span>
+    </div>
+    <div class="flex nav-links" style="color: #888; font-size: 0.9rem; gap: 24px;">
+      <a href="#" style="color: inherit; text-decoration: none;">Features</a>
+      <a href="#" style="color: inherit; text-decoration: none;">Docs</a>
+      <a href="#" style="color: inherit; text-decoration: none;">Pricing</a>
+    </div>
+    <style>
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none !important;
+        }
+
+        /* Hide links on mobile for simplicity */
+      }
+    </style>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero container center flex-col">
+    <div
+      style="padding: 4px 12px; border: 1px solid #333; border-radius: 99px; font-size: 0.8em; color: #888; margin-bottom: 16px;">
+      New: API v2.0 is now live
+    </div>
+    <h1>Payroll infrastructure<br>for the modern web.</h1>
+    <p class="lead">Interactive, accurate, and developer-friendly payroll API. Explore the possibilities below.</p>
+    <div class="flex">
+      <a href="#playground" class="btn btn-primary" id="startBtn">Start Exploring</a>
+      <a href="#" class="btn btn-secondary">Read Documentation</a>
+    </div>
+  </header>
+
+  <!-- Interactive Scenarios -->
+  <section class="container">
+    <div class="flex" style="justify-content: space-between; align-items: baseline;">
+      <h2>Explore Personas</h2>
+      <p class="text-muted">Click a specific card to preload the configuration.</p>
     </div>
 
-    <div class="main-grid">
-      <section class="panel form-panel">
-        <div class="toolbar">
-          <label class="small">Scenarios</label>
-          <select id="scenarioSelect"></select>
-          <button id="applyScenario" class="ghost">Apply</button>
-        </div>
+    <div class="card-grid">
+      <!-- Card: Student -->
+      <div class="card" onclick="loadPersona('student')">
+        <div class="card-icon">🎓</div>
+        <h3>The Student</h3>
+        <p class="text-muted">Part-time work with Plan 1 student loan deduction.</p>
+      </div>
 
-        <div class="fields">
+      <!-- Card: High Earner -->
+      <div class="card" onclick="loadPersona('highEarner')">
+        <div class="card-icon">📈</div>
+        <h3>High Earner</h3>
+        <p class="text-muted">£150k+ salary tapering personal allowance.</p>
+      </div>
+
+      <!-- Card: Pensioner -->
+      <div class="card" onclick="loadPersona('pensioner')">
+        <div class="card-icon">🕰️</div>
+        <h3>The Pensioner</h3>
+        <p class="text-muted">State pension age, no NI contributions (Category C).</p>
+      </div>
+
+      <!-- Card: Low Income -->
+      <div class="card" onclick="loadPersona('lowIncome')">
+        <div class="card-icon">🛡️</div>
+        <h3>Low Income</h3>
+        <p class="text-muted">Below tax threshold, minimizing deductions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Playground -->
+  <section id="playground" class="playground">
+    <div class="container">
+      <div class="interface">
+
+        <!-- Sidebar: Inputs -->
+        <div class="sidebar">
+          <h3 style="margin-bottom: 24px; color: #fff;">Configuration</h3>
+
+          <div class="control-group">
+            <label>Annual Gross Salary</label>
+            <input type="number" id="annualGrossSalary" value="30000">
+          </div>
+
           <div class="row">
-            <div class="col">
-              <label>Annual Gross Salary</label>
-              <input id="annualGrossSalary" type="number" value="30000" />
+            <div class="col control-group">
+              <label>Tax Code</label>
+              <input type="text" id="taxCode" value="1257L">
             </div>
-            <div class="col">
+            <div class="col control-group">
               <label>Pay Frequency</label>
               <select id="payFrequency">
                 <option>Monthly</option>
                 <option>Weekly</option>
-                <option>FourWeekly</option>
                 <option>Annual</option>
               </select>
             </div>
           </div>
 
           <div class="row">
-            <div class="col">
-              <label>Tax Code</label>
-              <input id="taxCode" value="1257L" />
+            <div class="col control-group">
+              <label>Emp. Pension %</label>
+              <input type="number" id="employeePension" value="5">
             </div>
-            <div class="col">
-              <label>Pay Period Date</label>
-              <input id="payPeriodDate" type="date" value="2025-06-01" />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col">
-              <label>Employee Pension %</label>
-              <input id="employeePension" type="number" value="5" />
-            </div>
-            <div class="col">
-              <label>Employer Pension %</label>
-              <input id="employerPension" type="number" value="3" />
+            <div class="col control-group">
+              <label>Pension Type</label>
+              <select id="pensionType">
+                <option>ReliefAtSource</option>
+                <option>SalarySacrifice</option>
+                <option>NetPayArrangement</option>
+                <option>None</option>
+              </select>
             </div>
           </div>
 
-          <label>Pension Type</label>
-          <select id="pensionType">
-            <option>None</option>
-            <option>ReliefAtSource</option>
-            <option>NetPayArrangement</option>
-            <option>SalarySacrifice</option>
-            <option>AutoEnrolment</option>
-          </select>
-
-          <div class="controls">
-            <button id="calc">Run calculation</button>
-            <button id="copy" class="secondary">Copy JSON</button>
-            <button id="download" class="secondary">Download Request</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel output-panel">
-        <div class="output-top">
-          <div>
-            <h3>Request</h3>
-            <p class="muted small">JSON sent to the API</p>
-          </div>
-          <div>
-            <h3>Response</h3>
-            <p class="muted small">Raw API response</p>
+          <div class="config-bar">
+            <label>API Base URL</label>
+            <input id="apiBase" value="https://app-stratuspayapi-prototype-a8bhacf4dqhtgxag.ukwest-01.azurewebsites.net"
+              style="font-size: 0.8rem; color: #666;">
           </div>
         </div>
 
-        <div class="output-body">
-          <pre id="req" class="box">{}</pre>
-          <pre id="res" class="box">(no response yet)</pre>
+        <!-- Main View: JSON Output & Visuals -->
+        <div class="main-view">
+          <div class="code-header">
+            <div class="tab">
+              <div class="dot active"></div>
+              <span>POST /api/v1/payroll/calculate</span>
+            </div>
+            <div class="tab">
+              <span id="latency" style="color: #666;">--ms</span>
+            </div>
+          </div>
+
+          <!-- Code Block (HighlightJS style) -->
+          <div class="code-content" id="codeBlock">
+            <!-- JSON will be injected here -->
+          </div>
+
+          <!-- Action Bar -->
+          <div class="action-bar">
+            <button class="btn btn-secondary" onclick="copyJson()"
+              style="height: 36px; padding: 0 16px; font-size: 0.85rem;">Copy JSON</button>
+            <button class="btn btn-primary" onclick="runCalculation()"
+              style="height: 36px; padding: 0 16px; font-size: 0.85rem; background: var(--accent); color: white; border: none;">Run
+              Request</button>
+          </div>
         </div>
 
-        <p class="note">Tip: If you see a CORS error, add <code>https://stratuspayuk.github.io</code> to your API's allowed origins in Azure App Service CORS or host this page on an allowed origin.</p>
-      </section>
+      </div>
+
+      <!-- Hidden elements from original for logic support -->
+      <input type="hidden" id="payPeriodDate" value="2025-06-01">
+      <input type="hidden" id="employerPension" value="3">
     </div>
-  </div>
+  </section>
 
   <script>
+    // State
+    const state = {
+      isPlan1: false,
+      isScottishResident: false,
+      niCategory: 'A'
+    };
+
+    // DOM Elements
     const $ = id => document.getElementById(id);
-    const apiBaseInput = $('apiBase');
-    const reqArea = $('req');
-    const resArea = $('res');
-    const scenarioSelect = $('scenarioSelect');
+    const codeBlock = $('codeBlock');
 
-    const scenarios = [
-      {
-        id: 'basic-monthly',
-        name: 'Basic Monthly (Standard Employee)',
-        data: { annualGrossSalary: 30000, taxCode: '1257L', payFrequency: 'Monthly', payPeriodDate: '2025-06-01', employeeContributionPercentage: 5, employerContributionPercentage: 3, pensionType: 'ReliefAtSource' }
-      },
-      {
-        id: 'zero-salary',
-        name: 'Zero Salary (edge case)',
-        data: { annualGrossSalary: 0, taxCode: '0T', payFrequency: 'Monthly', payPeriodDate: '2025-06-01' }
-      },
-      {
-        id: 'salary-sacrifice',
-        name: 'Salary Sacrifice (pension via sacrifice)',
-        data: { annualGrossSalary: 45000, taxCode: '1257L', payFrequency: 'Monthly', payPeriodDate: '2025-06-01', employeeContributionPercentage: 8, employerContributionPercentage: 5, pensionType: 'SalarySacrifice' }
-      },
-      {
-        id: 'scottish-resident',
-        name: 'Scottish Resident (Scottish tax bands)',
-        data: { annualGrossSalary: 40000, taxCode: 'S1257L', payFrequency: 'Monthly', payPeriodDate: '2025-06-01', isScottishResident: true }
-      },
-      {
-        id: 'student-loan-plan1',
-        name: 'Student Loan (Plan 1)',
-        data: { annualGrossSalary: 30000, taxCode: '1257L', payFrequency: 'Monthly', payPeriodDate: '2025-06-01', isPlan1: true }
-      },
-      {
-        id: 'high-earner',
-        name: 'High Earner (tax band testing)',
-        data: { annualGrossSalary: 180000, taxCode: '1257L', payFrequency: 'Monthly', payPeriodDate: '2025-06-01' }
-      }
-    ];
+    // Initial Render
+    updateJsonView();
 
-    function populateScenarioList() {
-      scenarios.forEach(s => {
-        const o = document.createElement('option');
-        o.value = s.id; o.textContent = s.name; scenarioSelect.appendChild(o);
+    // Event Listeners for real-time updates
+    ['annualGrossSalary', 'taxCode', 'payFrequency', 'employeePension', 'pensionType'].forEach(id => {
+      $(id).addEventListener('input', () => {
+        updateJsonView();
+        // Visual feedback
+        $(id).parentElement.classList.add('highlight-change');
+        setTimeout(() => $(id).parentElement.classList.remove('highlight-change'), 500);
       });
-    }
+    });
 
-    function applyScenarioById(id) {
-      const s = scenarios.find(x => x.id === id);
-      if (!s) return;
-      const d = s.data;
-      $('annualGrossSalary').value = d.annualGrossSalary ?? 0;
-      $('taxCode').value = d.taxCode ?? '1257L';
-      $('payFrequency').value = d.payFrequency ?? 'Monthly';
-      $('payPeriodDate').value = d.payPeriodDate ?? new Date().toISOString().slice(0,10);
-      $('employeePension').value = d.employeeContributionPercentage ?? 0;
-      $('employerPension').value = d.employerContributionPercentage ?? 0;
-      $('pensionType').value = d.pensionType ?? 'None';
-      // optional flags
-      // these fields are present on the API model but not in the main form; we include them in the request builder
+    // Personas Logic
+    function loadPersona(type) {
+      // Reset state
+      state.isPlan1 = false;
+      state.isScottishResident = false;
+      state.niCategory = 'A';
+
+      switch (type) {
+        case 'student':
+          $('annualGrossSalary').value = 28000;
+          $('taxCode').value = '1257L';
+          state.isPlan1 = true;
+          break;
+        case 'highEarner':
+          $('annualGrossSalary').value = 160000;
+          $('taxCode').value = '0T'; // Reduced PA
+          break;
+        case 'pensioner':
+          $('annualGrossSalary').value = 18000;
+          $('taxCode').value = '1257L';
+          $('employeePension').value = 0;
+          state.niCategory = 'C';
+          break;
+        case 'lowIncome':
+          $('annualGrossSalary').value = 11000;
+          $('taxCode').value = '1257L';
+          break;
+      }
+
+      // visual feedback
+      updateJsonView();
+      document.getElementById('playground').scrollIntoView({ behavior: 'smooth' });
+      runCalculation();
     }
 
     function buildRequest() {
-      const body = {
-        uniqueEmployeeId: 'DEMO-001',
-        annualGrossSalary: Number($('annualGrossSalary').value) || 0,
-        taxCode: $('taxCode').value || '1257L',
+      return {
+        uniqueEmployeeId: 'DEMO-USER',
+        annualGrossSalary: Number($('annualGrossSalary').value),
+        taxCode: $('taxCode').value,
         payFrequency: $('payFrequency').value,
         payPeriodDate: $('payPeriodDate').value,
-        employeeContributionPercentage: Number($('employeePension').value) || 0,
-        employerContributionPercentage: Number($('employerPension').value) || 0,
-        pensionType: $('pensionType').value || 'None',
-        isPlan1: false,
-        isPlan2: false,
-        isPlan4: false,
-        isPlan5: false,
-        isPostgraduate: false,
-        isScottishResident: false,
-        isBlindPerson: false
+        employeeContributionPercentage: Number($('employeePension').value),
+        employerContributionPercentage: Number($('employerPension').value),
+        pensionType: $('pensionType').value,
+        niCategory: state.niCategory,
+        isPlan1: state.isPlan1,
+        isScottishResident: state.isScottishResident
       };
-      return body;
     }
 
-    function showRequest(body) { reqArea.textContent = JSON.stringify(body, null, 2); }
-    function showResponse(obj) { resArea.textContent = JSON.stringify(obj, null, 2); }
+    function updateJsonView(responseData = null) {
+      if (!responseData) {
+        // Show Request Preview
+        const req = buildRequest();
+        codeBlock.innerHTML = syntaxHighlight(req);
+        codeBlock.style.opacity = '0.7'; // Dim slightly to indicate it's a request preview
+      } else {
+        // Show Response
+        codeBlock.innerHTML = syntaxHighlight(responseData);
+        codeBlock.style.opacity = '1';
+      }
+    }
 
-    async function runCalc() {
-      resArea.textContent = 'Calling API...';
-      const apiBase = apiBaseInput.value.trim().replace(/\/$/, '');
+    async function runCalculation() {
+      const btn = document.querySelector('button.btn-primary');
+      const originalText = btn.textContent;
+      btn.textContent = "Processing...";
+      btn.style.opacity = "0.7";
+
+      const start = Date.now();
+      const apiBase = $('apiBase').value.replace(/\/$/, '');
       const url = apiBase + '/api/v1/payroll/calculate';
-      const body = buildRequest();
-      showRequest(body);
 
       try {
         const resp = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body)
+          body: JSON.stringify(buildRequest())
         });
 
-        const text = await resp.text();
-        let parsed;
-        try { parsed = JSON.parse(text); } catch { parsed = text; }
-        showResponse({ status: resp.status, ok: resp.ok, body: parsed });
-      } catch (err) {
-        showResponse({ error: String(err) });
+        const data = await resp.json();
+        const latency = Date.now() - start;
+        $('latency').textContent = latency + 'ms';
+        $('latency').style.color = latency < 300 ? 'var(--success)' : 'var(--warning)';
+
+        updateJsonView(data);
+
+      } catch (e) {
+        codeBlock.textContent = "Error: " + e.message;
+        codeBlock.style.color = "var(--error)";
       }
+
+      btn.textContent = originalText;
+      btn.style.opacity = "1";
     }
 
-    function downloadRequest() {
-      const body = buildRequest();
-      const blob = new Blob([JSON.stringify(body, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'stratuspay-request.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    function syntaxHighlight(json) {
+      if (typeof json != 'string') {
+        json = JSON.stringify(json, undefined, 2);
+      }
+      json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'json-number';
+        if (/^"/.test(match)) {
+          if (/:$/.test(match)) {
+            cls = 'json-key';
+          } else {
+            cls = 'json-string';
+          }
+        } else if (/true|false/.test(match)) {
+          cls = 'json-boolean';
+        } else if (/null/.test(match)) {
+          cls = 'json-null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+      });
     }
 
-    // wire up
-    populateScenarioList();
-    $('applyScenario').addEventListener('click', () => applyScenarioById(scenarioSelect.value));
-    $('calc').addEventListener('click', runCalc);
-    $('copy').addEventListener('click', () => navigator.clipboard?.writeText(reqArea.textContent || ''));
-    $('download').addEventListener('click', downloadRequest);
+    function copyJson() {
+      navigator.clipboard.writeText(JSON.stringify(buildRequest(), null, 2));
+    }
 
-    // initialize with the first scenario
-    if (scenarios.length) { scenarioSelect.value = scenarios[0].id; applyScenarioById(scenarios[0].id); }
-    showRequest(buildRequest());
+    // initial trigger
+    updateJsonView();
+
   </script>
 </body>
+
 </html>
