@@ -95,6 +95,7 @@
       line-height: 1.1;
       font-weight: 800;
       background: linear-gradient(180deg, #fff 0%, #888 100%);
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 24px;
@@ -442,16 +443,18 @@
 
 <body>
 
-  <!-- Navigation (Visual only) -->
-  <nav class="container flex" style="height: 80px; justify-content: space-between;">
-    <div class="flex">
-      <div style="width: 24px; height: 24px; background: white; border-radius: 50%;"></div> <!-- Logo placeholder -->
-      <span style="font-weight: 700; font-size: 1.1rem;">StratusPay</span>
-    </div>
-    <div class="flex nav-links" style="color: #888; font-size: 0.9rem; gap: 24px;">
-      <a href="#" style="color: inherit; text-decoration: none;">Features</a>
-      <a href="#" style="color: inherit; text-decoration: none;">Docs</a>
-      <a href="#" style="color: inherit; text-decoration: none;">Pricing</a>
+  <!-- Navigation (Sticky) -->
+  <nav class="sticky-header" style="height: 80px;">
+    <div class="nav-inner">
+      <div class="flex">
+        <div style="width: 24px; height: 24px; background: white; border-radius: 50%;"></div> <!-- Logo placeholder -->
+        <span style="font-weight: 700; font-size: 1.1rem;">StratusPay</span>
+      </div>
+      <div class="flex nav-links" style="color: #888; font-size: 0.9rem; gap: 24px;">
+        <a href="#" style="color: inherit; text-decoration: none;">Features</a>
+        <a href="#" style="color: inherit; text-decoration: none;">Docs</a>
+        <a href="#" style="color: inherit; text-decoration: none;">Pricing</a>
+      </div>
     </div>
     <style>
       @media (max-width: 768px) {
@@ -460,6 +463,35 @@
         }
 
         /* Hide links on mobile for simplicity */
+      }
+
+      /* Sticky Nav Styles */
+      nav.sticky-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+        transition: all 0.2s ease;
+        max-width: 100%;
+        /* Ensure it spans full width */
+        padding: 0 24px;
+        /* Re-apply container padding */
+        margin: 0;
+        /* Reset margin for full width */
+      }
+
+      /* Inner container to center content inside sticky full-width nav */
+      .nav-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        width: 100%;
       }
     </style>
   </nav>
@@ -512,6 +544,13 @@
         <div class="card-icon">🛡️</div>
         <h3>Low Income</h3>
         <p class="text-muted">Below tax threshold, minimizing deductions.</p>
+      </div>
+
+      <!-- Card: Scottish Resident -->
+      <div class="card" onclick="loadPersona('scottish')">
+        <div class="card-icon">🏴󠁧󠁢󠁳󠁣󠁴󠁿</div>
+        <h3>Scottish Resident</h3>
+        <p class="text-muted">Standard rate taxpayer with Scottish tax codes (S prefix).</p>
       </div>
     </div>
   </section>
@@ -603,6 +642,62 @@
     </div>
   </section>
 
+  <!-- Value Proposition -->
+  <section class="container center flex-col" style="padding: 80px 0; text-align: center;">
+    <h2 style="font-size: 4rem; letter-spacing: -0.04em; margin-bottom: 32px; line-height: 1;">
+      <span
+        style="background: linear-gradient(180deg, #fff 0%, #888 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Faster.</span>
+      <span style="color: #fff;">Simpler.</span>
+    </h2>
+    <p class="lead" style="max-width: 750px; font-size: 1.25rem;">
+      Stop battling the pain points of annual payroll updates. Integrate StratusPay to handle the complexity, so you can
+      focus on adding the new features that sell your product.
+    </p>
+
+    <!-- Collapsible Story -->
+    <div style="width: 100%; max-width: 800px; text-align: left;">
+      <details class="story-details">
+        <summary class="flex">
+          <span style="font-size: 1.25rem; font-weight: 600;">Our Story</span>
+          <span class="icon">+</span>
+        </summary>
+        <div class="story-content">
+          <p style="margin-bottom: 16px;">
+            StratusPay was born from years of deep industry experience within the HR and Payroll software sector.
+            We witnessed firsthand the recurring struggles that software providers face year after year:
+            the complex burden of upgrading payroll engines to comply with ever-changing legislation.
+          </p>
+          <p style="margin-bottom: 16px;">
+            Maintaining these systems requires niche, hard-to-find in-house skills and diverts valuable resources
+            away from core product innovation. Worse, these critical updates must be delivered under impossibly
+            tight statutory deadlines, creating annual cycles of stress and risk.
+          </p>
+          <p>
+            We realized there had to be a better way. We built StratusPay to shoulder that burden—providing a
+            robust, always-compliant infrastructure so you never have to worry about payroll legislation again.
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Contact & Footer -->
+  <footer class="container center flex-col" style="padding: 80px 0; border-top: 1px solid var(--border);">
+    <h2 style="font-size: 2.5rem; margin-bottom: 24px;">Ready to simplify your payroll?</h2>
+    <p class="lead" style="margin-bottom: 32px;">
+      Get in touch to discuss how StratusPay can integrate with your platform.
+    </p>
+    <a href="mailto:stratuspayuk@gmail.com" class="btn btn-primary" style="margin-bottom: 40px;">
+      Contact Us
+    </a>
+
+    <div class="flex" style="gap: 24px; color: #666; font-size: 0.9rem;">
+      <span>&copy; 2025 StratusPay Ltd.</span>
+      <a href="#" style="color: inherit; text-decoration: none;">Terms & Conditions</a>
+      <a href="mailto:stratuspayuk@gmail.com" style="color: inherit; text-decoration: none;">stratuspayuk@gmail.com</a>
+    </div>
+  </footer>
+
   <script>
     // State
     const state = {
@@ -654,6 +749,11 @@
         case 'lowIncome':
           $('annualGrossSalary').value = 11000;
           $('taxCode').value = '1257L';
+          break;
+        case 'scottish':
+          $('annualGrossSalary').value = 35000;
+          $('taxCode').value = 'S1257L';
+          state.isScottishResident = true;
           break;
       }
 
