@@ -189,6 +189,7 @@
     .btn-primary:hover {
       background: #dedede;
       transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
     }
 
     .btn-secondary {
@@ -439,6 +440,25 @@
         background-color: transparent;
       }
     }
+
+    /* Footer Styles */
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      color: #666;
+      font-size: 0.9rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      .footer-links {
+        font-size: 0.75rem;
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
   </style>
 </head>
 
@@ -505,9 +525,8 @@
     </div>
     <h1>Payroll infrastructure<br>for the modern web.</h1>
     <p class="lead">Interactive, accurate, and developer-friendly payroll API. Explore the possibilities below.</p>
-    <div class="flex">
+    <div class="flex" style="justify-content: center;">
       <a href="#playground" class="btn btn-primary" id="startBtn">Start Exploring</a>
-      <a href="#" class="btn btn-secondary">Read Documentation</a>
     </div>
   </header>
 
@@ -651,7 +670,7 @@
   </section>
 
   <!-- Value Proposition -->
-  <section class="container center flex-col" style="padding: 80px 0; text-align: center;">
+  <section class="container center flex-col" style="padding: 80px 5%; text-align: center;">
     <h2 style="font-size: 4rem; letter-spacing: -0.04em; margin-bottom: 32px; line-height: 1;">
       <span
         style="background: linear-gradient(180deg, #fff 0%, #888 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Faster.</span>
@@ -690,7 +709,7 @@
   </section>
 
   <!-- Contact & Footer -->
-  <footer class="container center flex-col" style="padding: 80px 0; border-top: 1px solid var(--border);">
+  <footer class="container center flex-col" style="padding: 80px 5%; border-top: 1px solid var(--border);">
     <h2 style="font-size: 2.5rem; margin-bottom: 24px;">Ready to simplify your payroll?</h2>
     <p class="lead" style="margin-bottom: 32px;">
       Get in touch to discuss how StratusPay can integrate with your platform.
@@ -699,7 +718,7 @@
       Contact Us
     </a>
 
-    <div class="flex" style="gap: 24px; color: #666; font-size: 0.9rem;">
+    <div class="footer-links">
       <span>&copy; 2025 StratusPay Ltd.</span>
       <a href="#" style="color: inherit; text-decoration: none;">Terms & Conditions</a>
       <a href="mailto:stratuspayuk@gmail.com" style="color: inherit; text-decoration: none;">stratuspayuk@gmail.com</a>
