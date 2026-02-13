@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>StratusPay Explorer</title>
+  <title>StratusPayAPI Explorer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -141,7 +141,7 @@
 
     /* Hero Section */
     .hero {
-      padding: 120px 0;
+      padding: 60px 0 120px 0;
       position: relative;
       overflow: hidden;
     }
@@ -182,14 +182,14 @@
     }
 
     .btn-primary {
-      background: var(--fg);
-      color: var(--bg);
+      background: #F7931A;
+      color: #fff;
     }
 
     .btn-primary:hover {
-      background: #dedede;
+      background: #e08214;
       transform: translateY(-1px);
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 20px rgba(247, 147, 26, 0.4);
     }
 
     .btn-secondary {
@@ -468,8 +468,10 @@
   <nav class="sticky-header" style="height: 80px;">
     <div class="nav-inner">
       <div class="flex">
-        <div style="width: 24px; height: 24px; background: white; border-radius: 50%;"></div> <!-- Logo placeholder -->
-        <span style="font-weight: 700; font-size: 1.1rem;">StratusPay</span>
+        <img src="logo.jpg" alt="StratusPay"
+          style="height: 72px; width: 72px; object-fit: contain; border-radius: 50%; padding: 8px; background: #000;">
+        <span style="font-weight: 700; font-size: 1.1rem;">StratusPay<span
+            style="color: #F7931A;"></span>API</span></span>
       </div>
       <div class="flex nav-links" style="color: #888; font-size: 0.9rem; gap: 24px;">
         <a href="#" style="color: inherit; text-decoration: none;">Features</a>
@@ -516,24 +518,25 @@
       }
     </style>
   </nav>
-
   <!-- Hero -->
   <header class="hero container center flex-col">
-    <div
-      style="padding: 4px 12px; border: 1px solid #333; border-radius: 99px; font-size: 0.8em; color: #888; margin-bottom: 16px;">
-      New: API v2.0 is now live
-    </div>
-    <h1>Payroll infrastructure<br>for the modern web.</h1>
-    <p class="lead">Interactive, accurate, and developer-friendly payroll API. Explore the possibilities below.</p>
-    <div class="flex" style="justify-content: center;">
-      <a href="#playground" class="btn btn-primary" id="startBtn">Start Exploring</a>
+    <img src="logo.jpg" id="hero-logo" alt="StratusPay"
+      style="height: auto; width: 50vw; max-width: 800px; margin-bottom: 0; border-radius: 40px; box-shadow: 0 40px 100px -20px rgba(0,0,0,0.7); position: relative; z-index: 1;">
+
+    <div class="hero-content center flex-col" style="margin-top: -3vw; position: relative; z-index: 2;">
+      <h1 style="text-shadow: 0 8px 24px rgba(0,0,0,1);">Payroll infrastructure<br>for the modern web.</h1>
+      <p class="lead" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8); color: #ccc;">Interactive, accurate, and
+        developer-friendly payroll API. Explore the possibilities below.</p>
+      <div class="flex" style="justify-content: center;">
+        <a href="#playground" class="btn btn-primary" id="startBtn">Start Exploring</a>
+      </div>
     </div>
   </header>
 
   <!-- Interactive Scenarios -->
   <section class="container">
     <div class="flex" style="justify-content: space-between; align-items: baseline;">
-      <h2>Explore Personas</h2>
+      <h2>Explore <span style="color: #F7931A;"></span>Personas</span></h2>
       <p class="text-muted">Click a specific card to preload the configuration.</p>
     </div>
 
@@ -674,7 +677,7 @@
     <h2 style="font-size: 4rem; letter-spacing: -0.04em; margin-bottom: 32px; line-height: 1;">
       <span
         style="background: linear-gradient(180deg, #fff 0%, #888 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Faster.</span>
-      <span style="color: #fff;">Simpler.</span>
+      <span style="color: #F7931A;">Simpler.</span>
     </h2>
     <p class="lead" style="max-width: 750px; font-size: 1.25rem;">
       Stop battling the pain points of annual payroll updates. Integrate StratusPay to handle the complexity, so you can
@@ -685,12 +688,13 @@
     <div style="width: 100%; max-width: 800px; text-align: left;">
       <details class="story-details">
         <summary class="flex">
-          <span style="font-size: 1.25rem; font-weight: 600;">Our Story</span>
+          <span style="font-size: 1.25rem; font-weight: 600;">Our <span
+              style="color: #F7931A;"></span>Story</span></span>
           <span class="icon">+</span>
         </summary>
         <div class="story-content">
           <p style="margin-bottom: 16px;">
-            StratusPay was born from years of deep industry experience within the HR and Payroll software sector.
+            StratusPayAPI was born from years of deep industry experience within the HR and Payroll software sector.
             We witnessed firsthand the recurring struggles that software providers face year after year:
             the complex burden of upgrading payroll engines to comply with ever-changing legislation.
           </p>
@@ -700,7 +704,7 @@
             tight statutory deadlines, creating annual cycles of stress and risk.
           </p>
           <p>
-            We realized there had to be a better way. We built StratusPay to shoulder that burden—providing a
+            We realized there had to be a better way. We built StratusPayAPI to shoulder that burden—providing a
             robust, always-compliant infrastructure so you never have to worry about payroll legislation again.
           </p>
         </div>
@@ -712,20 +716,38 @@
   <footer class="container center flex-col" style="padding: 80px 5%; border-top: 1px solid var(--border);">
     <h2 style="font-size: 2.5rem; margin-bottom: 24px;">Ready to simplify your payroll?</h2>
     <p class="lead" style="margin-bottom: 32px;">
-      Get in touch to discuss how StratusPay can integrate with your platform.
+      Get in touch to discuss how StratusPayAPI can integrate with your platform.
     </p>
     <a href="mailto:stratuspayuk@gmail.com" class="btn btn-primary" style="margin-bottom: 40px;">
       Contact Us
     </a>
 
     <div class="footer-links">
-      <span>&copy; 2025 StratusPay Ltd.</span>
-      <a href="#" style="color: inherit; text-decoration: none;">Terms & Conditions</a>
+      <span>&copy; 2025 Altios Ltd.</span>
+      in <a href="#" style="color: inherit; text-decoration: none;">Terms & Conditions</a>
       <a href="mailto:stratuspayuk@gmail.com" style="color: inherit; text-decoration: none;">stratuspayuk@gmail.com</a>
     </div>
   </footer>
 
   <script>
+    // Scroll Effect for Hero Logo
+    window.addEventListener('scroll', () => {
+      const logo = document.getElementById('hero-logo');
+      if (logo) {
+        const scrolled = window.scrollY;
+        // Fade out quickly (within first 300px)
+        const opacity = Math.max(0, 1 - (scrolled / 300));
+        // Parallax / Scale effect
+        const scale = Math.max(0.8, 1 - (scrolled / 1000));
+
+        logo.style.opacity = opacity;
+        logo.style.transform = `scale(${scale})`;
+
+        // Hide completely if scrolled past to avoid click interactions
+        logo.style.visibility = opacity <= 0 ? 'hidden' : 'visible';
+      }
+    });
+
     // State
     const state = {
       isPlan1: false,
