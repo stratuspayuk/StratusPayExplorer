@@ -12,9 +12,9 @@
     rel="stylesheet">
   <style>
     :root {
-      --bg: #000000;
+      --bg: #0D0E10;
       --fg: #ffffff;
-      --surface: #111111;
+      --surface: #0D0E10;
       --border: #333333;
       --accent: #0070f3;
       /* Vercel Blue */
@@ -50,12 +50,12 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #444;
+      background: #1A1B1D;
       border-radius: 4px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: #666;
+      background: #2A2B2D;
     }
 
     /* Layout Utilities */
@@ -95,10 +95,8 @@
       letter-spacing: -0.04em;
       line-height: 1.1;
       font-weight: 800;
-      background: linear-gradient(180deg, #fff 0%, #888 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #FFFFFF;
+      text-shadow: 0 2px 5px rgba(224, 224, 224, 0.2);
       margin-bottom: 24px;
     }
 
@@ -182,7 +180,7 @@
     }
 
     .btn-primary {
-      background: #F7931A;
+      background: #D5760F;
       color: #fff;
     }
 
@@ -232,15 +230,15 @@
     }
 
     .card:hover {
-      border-color: var(--accent);
+      border-color: #F7931A;
       transform: translateY(-4px);
-      box-shadow: 0 12px 40px -10px rgba(0, 112, 243, 0.3);
+      box-shadow: 0 12px 40px -10px rgba(247, 147, 26, 0.3);
     }
 
     .card-icon {
       width: 40px;
       height: 40px;
-      background: #222;
+      background: #1A1B1D;
       border-radius: 8px;
       display: flex;
       align-items: center;
@@ -252,8 +250,8 @@
     /* Playground */
     .playground {
       border-top: 1px solid var(--border);
-      background: linear-gradient(180deg, var(--bg) 0%, #0a0a0a 100%);
-      padding: 80px 0;
+      background: linear-gradient(180deg, var(--bg) 0%, #0D0E10 100%);
+      padding: 30px 0;
     }
 
     .interface {
@@ -281,12 +279,12 @@
     .sidebar {
       padding: 24px;
       border-right: 1px solid var(--border);
-      background: #080808;
+      background: #0D0E10;
     }
 
     .main-view {
       padding: 0;
-      background: #111;
+      background: #0D0E10;
       display: flex;
       flex-direction: column;
     }
@@ -309,7 +307,7 @@
     input,
     select {
       width: 100%;
-      background: #1a1a1a;
+      background: #1A1B1D;
       border: 1px solid #333;
       color: #fff;
       padding: 10px 12px;
@@ -342,7 +340,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #0d0d0d;
+      background: #0D0E10;
     }
 
     .tab {
@@ -357,7 +355,7 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #333;
+      background: #1A1B1D;
     }
 
     .dot.active {
@@ -379,6 +377,27 @@
       color: #7ee787;
     }
 
+    .json-key.has-tooltip {
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      cursor: help;
+      position: relative;
+    }
+
+    .json-key.has-tooltip:hover::after {
+      content: attr(title);
+      position: absolute;
+      left: 100%;
+      top: 0;
+      background-color: #333;
+      color: #fff;
+      padding: 5px;
+      border-radius: 3px;
+      z-index: 1;
+      white-space: nowrap;
+      margin-left: 10px;
+    }
+
     .json-string {
       color: #a5d6ff;
     }
@@ -395,7 +414,7 @@
     .action-bar {
       padding: 16px 24px;
       border-top: 1px solid var(--border);
-      background: #0d0d0d;
+      background: #0D0E10;
       display: flex;
       justify-content: flex-end;
       gap: 12px;
@@ -405,7 +424,6 @@
     .config-bar {
       margin-top: 24px;
       padding-top: 24px;
-      border-top: 1px solid #222;
     }
 
     /* Animations */
@@ -452,6 +470,13 @@
       justify-content: center;
     }
 
+    .section-divider {
+      border: 0;
+      border-top: 2px solid #F7931A;
+      margin: 80px auto;
+      width: 50%;
+    }
+
     @media (max-width: 768px) {
       .footer-links {
         font-size: 0.75rem;
@@ -467,16 +492,14 @@
   <!-- Navigation (Sticky) -->
   <nav class="sticky-header" style="height: 80px;">
     <div class="nav-inner">
-      <div class="flex">
+      <div class="flex" style="gap: 8px;">
         <img src="logo.jpg" alt="StratusPay"
-          style="height: 72px; width: 72px; object-fit: contain; border-radius: 50%; padding: 8px; background: #000;">
+          style="height: 72px; width: 72px; object-fit: contain; border-radius: 50%; padding: 8px; background: #0D0E10;">
         <span style="font-weight: 700; font-size: 1.1rem;">StratusPay<span
             style="color: #F7931A;"></span>API</span></span>
       </div>
       <div class="flex nav-links" style="color: #888; font-size: 0.9rem; gap: 24px;">
-        <a href="#" style="color: inherit; text-decoration: none;">Features</a>
         <a href="#" style="color: inherit; text-decoration: none;">Docs</a>
-        <a href="#" style="color: inherit; text-decoration: none;">Pricing</a>
       </div>
     </div>
     <style>
@@ -493,10 +516,9 @@
         position: sticky;
         top: 0;
         z-index: 100;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(13, 14, 16, 0.8);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--border);
         transition: all 0.2s ease;
         max-width: 100%;
         /* Ensure it spans full width */
@@ -523,8 +545,8 @@
     <img src="logo.jpg" id="hero-logo" alt="StratusPay"
       style="height: auto; width: 50vw; max-width: 800px; margin-bottom: 0; border-radius: 40px; box-shadow: 0 40px 100px -20px rgba(0,0,0,0.7); position: relative; z-index: 1;">
 
-    <div class="hero-content center flex-col" style="margin-top: -3vw; position: relative; z-index: 2;">
-      <h1 style="text-shadow: 0 8px 24px rgba(0,0,0,1);">Payroll infrastructure<br>for the modern web.</h1>
+    <div class="hero-content center flex-col" style="margin-top: -1vw; position: relative; z-index: 2;">
+      <h1 style="text-shadow: 0 8px 24px rgba(0,0,0,1);"><span style="color: #F7931A;">Payroll</span> infrastructure<br>for the <span style="color: #F7931A;">modern web.</span></h1>
       <p class="lead" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8); color: #ccc;">Interactive, accurate, and
         developer-friendly payroll API. Explore the possibilities below.</p>
       <div class="flex" style="justify-content: center;">
@@ -532,6 +554,8 @@
       </div>
     </div>
   </header>
+
+  <hr class="section-divider">
 
   <!-- Interactive Scenarios -->
   <section class="container">
@@ -584,6 +608,8 @@
       </div>
     </div>
   </section>
+
+  <hr class="section-divider">
 
   <!-- Main Playground -->
   <section id="playground" class="playground">
@@ -672,6 +698,8 @@
     </div>
   </section>
 
+  <hr class="section-divider">
+
   <!-- Value Proposition -->
   <section class="container center flex-col" style="padding: 80px 5%; text-align: center;">
     <h2 style="font-size: 4rem; letter-spacing: -0.04em; margin-bottom: 32px; line-height: 1;">
@@ -712,8 +740,10 @@
     </div>
   </section>
 
+  <hr class="section-divider">
+
   <!-- Contact & Footer -->
-  <footer class="container center flex-col" style="padding: 80px 5%; border-top: 1px solid var(--border);">
+  <footer class="container center flex-col" style="padding: 80px 5%;">
     <h2 style="font-size: 2.5rem; margin-bottom: 24px;">Ready to simplify your payroll?</h2>
     <p class="lead" style="margin-bottom: 32px;">
       Get in touch to discuss how StratusPayAPI can integrate with your platform.
@@ -723,7 +753,7 @@
     </a>
 
     <div class="footer-links">
-      <span>&copy; 2025 Altios Ltd.</span>
+      <span>&copy; 2025 Stratogenie Ltd.</span>
       in <a href="#" style="color: inherit; text-decoration: none;">Terms & Conditions</a>
       <a href="mailto:stratuspayuk@gmail.com" style="color: inherit; text-decoration: none;">stratuspayuk@gmail.com</a>
     </div>
@@ -879,6 +909,17 @@
     }
 
     function syntaxHighlight(json) {
+      const tooltips = {
+        "grossPay": "The total amount of money an employee receives before any taxes and deductions are taken out.",
+        "netPay": "The amount of money an employee takes home after all deductions have been taken out.",
+        "incomeTax": "The amount of tax you pay on your income.",
+        "nationalInsurance": "A contribution you pay to build up your entitlement to certain state benefits, such as the State Pension.",
+        "employeePensionContribution": "The amount you contribute to your pension from your salary.",
+        "employerPensionContribution": "The amount your employer contributes to your pension.",
+        "studentLoan": "The amount deducted for student loan repayments.",
+        "taxablePay": "The amount of your pay that you pay tax on."
+      };
+
       if (typeof json != 'string') {
         json = JSON.stringify(json, undefined, 2);
       }
@@ -888,6 +929,10 @@
         if (/^"/.test(match)) {
           if (/:$/.test(match)) {
             cls = 'json-key';
+            const key = match.slice(1, -2); // extract key
+            if (tooltips[key]) {
+              return '<span class="' + cls + ' has-tooltip" title="' + tooltips[key] + '">' + match + '</span>';
+            }
           } else {
             cls = 'json-string';
           }
