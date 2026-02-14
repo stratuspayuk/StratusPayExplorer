@@ -491,11 +491,48 @@
         width: 80vw !important;
       }
     }
+
+    .new-sticky-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #000000; /* Pure black */
+      z-index: 1000;
+      padding: 10px 0; /* Vertical padding, horizontal handled by .container */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    }
+
+    .new-sticky-header-inner {
+      display: flex;
+      align-items: center;
+      gap: 4px; /* 4px gap between logo and text */
+    }
+
+    .new-header-logo {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      object-fit: contain;
+      /* Background color is already in logo.jpg styling */
+    }
+
+    .new-header-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #FFFFFF; /* White text for contrast */
+    }
   </style>
 </head>
 
 <body>
 
+  <nav class="new-sticky-header">
+    <div class="container new-sticky-header-inner">
+      <img src="logo.jpg" alt="StratusPay Logo" class="new-header-logo">
+      <span class="new-header-title">StratusPayAPI</span>
+    </div>
+  </nav>
 
   <!-- Hero -->
   <header class="hero container center flex-col">
