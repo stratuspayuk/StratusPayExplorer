@@ -24,6 +24,7 @@
       --error: #ff0000;
       --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
+      --header-height: 72px; /* Custom property for fixed header height, increased by 20% */
     }
 
     * {
@@ -139,10 +140,11 @@
 
     /* Hero Section */
     .hero {
-      padding: 60px 0 120px 0;
+      padding: 0 0 120px 0; /* Adjusted padding-top to 0, margin-top will create the gap */
       position: relative;
       overflow: hidden;
       background: #0D0E10;
+      margin-top: var(--header-height); /* Add margin-top equal to header height */
     }
 
     @media (max-width: 768px) {
