@@ -524,6 +524,37 @@
       font-size: 1.1rem;
       color: #FFFFFF; /* White text for contrast */
     }
+    @media (max-width: 768px) {
+      .card {
+        overflow-x: auto;
+      }
+      table {
+        white-space: nowrap;
+      }
+    }
+    .mobile-only {
+      display: none;
+    }
+    .accordion-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .accordion-header {
+      padding: 16px 0;
+      cursor: pointer;
+      font-weight: 600;
+      list-style: none;
+    }
+    .accordion-content {
+      padding-bottom: 16px;
+    }
+    @media (max-width: 768px) {
+      .desktop-only {
+        display: none;
+      }
+      .mobile-only {
+        display: block;
+      }
+    }
   </style>
 </head>
 
@@ -556,35 +587,150 @@
       <p>This is the primary endpoint for calculating payroll. It takes a detailed request object and returns a comprehensive breakdown of pay, deductions, and contributions.</p>
 
       <div class="card" style="margin-top: 24px;">
-        <h3 style="color: #F7931A;">Request Parameters</h3>
-        <table class="table" style="width: 100%; border-collapse: collapse; text-align: left;">
-          <thead>
-            <tr>
-              <th style="padding: 12px; border-bottom: 1px solid var(--border);">Parameter</th>
-              <th style="padding: 12px; border-bottom: 1px solid var(--border);">Type</th>
-              <th style="padding: 12px; border-bottom: 1px solid var(--border);">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">annualGrossSalary</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">number</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's annual gross salary.</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">taxCode</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's tax code (e.g., "1257L").</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">payFrequency</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The pay frequency ("Monthly", "Weekly", "Annual").</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">payPeriodDate</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The date of the pay period in YYYY-MM-DD format.</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">employeeContributionPercentage</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">number</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's pension contribution percentage.</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">employerContributionPercentage</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">number</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employer's pension contribution percentage.</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">pensionType</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The pension type ("ReliefAtSource", "SalarySacrifice", "NetPayArrangement", "None").</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan1</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 1 student loan.</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan2</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 2 student loan.</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan4</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 4 student loan.</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan5</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 5 student loan.</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPostgraduate</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a postgraduate loan.</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isScottishResident</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is a Scottish resident.</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isBlindPerson</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is registered blind.</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isMarriageAllowanceTransferor</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is transferring the marriage allowance.</td></tr>
-            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isMarriageAllowanceRecipient</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is receiving the marriage allowance.</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <h3 style="color: #F7931A;">Request Parameters</h3>
+    <table class="table desktop-only" style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+        <tr>
+            <th style="padding: 12px; border-bottom: 1px solid var(--border);">Parameter</th>
+            <th style="padding: 12px; border-bottom: 1px solid var(--border);">Type</th>
+            <th style="padding: 12px; border-bottom: 1px solid var(--border);">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">annualGrossSalary</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">number</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's annual gross salary.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">taxCode</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's tax code (e.g., "1257L").</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">payFrequency</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The pay frequency ("Monthly", "Weekly", "Annual").</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">payPeriodDate</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The date of the pay period in YYYY-MM-DD format.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">employeeContributionPercentage</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">number</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's pension contribution percentage.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">employerContributionPercentage</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">number</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employer's pension contribution percentage.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">pensionType</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The pension type ("ReliefAtSource", "SalarySacrifice", "NetPayArrangement", "None").</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan1</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 1 student loan.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan2</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 2 student loan.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan4</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 4 student loan.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan5</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 5 student loan.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPostgraduate</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a postgraduate loan.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isScottishResident</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is a Scottish resident.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isBlindPerson</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is registered blind.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isMarriageAllowanceTransferor</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is transferring the marriage allowance.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isMarriageAllowanceRecipient</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is receiving the marriage allowance.</td></tr>
+        </tbody>
+    </table>
+    <div class="mobile-only">
+        <details class="accordion-item">
+            <summary class="accordion-header">annualGrossSalary</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> number</p>
+                <p><strong>Description:</strong> The employee's annual gross salary.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">taxCode</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> string</p>
+                <p><strong>Description:</strong> The employee's tax code (e.g., "1257L").</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">payFrequency</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> string</p>
+                <p><strong>Description:</strong> The pay frequency ("Monthly", "Weekly", "Annual").</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">payPeriodDate</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> string</p>
+                <p><strong>Description:</strong> The date of the pay period in YYYY-MM-DD format.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">employeeContributionPercentage</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> number</p>
+                <p><strong>Description:</strong> The employee's pension contribution percentage.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">employerContributionPercentage</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> number</p>
+                <p><strong>Description:</strong> The employer's pension contribution percentage.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">pensionType</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> string</p>
+                <p><strong>Description:</strong> The pension type ("ReliefAtSource", "SalarySacrifice", "NetPayArrangement", "None").</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isPlan1</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee has a Plan 1 student loan.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isPlan2</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee has a Plan 2 student loan.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isPlan4</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee has a Plan 4 student loan.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isPlan5</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee has a Plan 5 student loan.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isPostgraduate</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee has a postgraduate loan.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isScottishResident</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee is a Scottish resident.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isBlindPerson</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee is registered blind.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isMarriageAllowanceTransferor</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee is transferring the marriage allowance.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isMarriageAllowanceRecipient</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee is receiving the marriage allowance.</p>
+            </div>
+        </details>
+    </div>
+</div>
+
 
       <div class="card" style="margin-top: 24px;">
         <h3 style="color: #F7931A;">Example Request</h3>
