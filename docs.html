@@ -537,229 +537,76 @@
       </div>
       <div class="flex" style="gap: 24px;">
         <a href="index.html" style="color: #fff; text-decoration: none; font-size: 0.9rem;">Explorer</a>
-        <a href="docs.html" style="color: #fff; text-decoration: none; font-size: 0.9rem;">Docs</a>
+        <a href="docs.html" style="color: #F7931A; text-decoration: none; font-size: 0.9rem;">Docs</a>
       </div>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="hero container center flex-col">
-    <img src="logo.jpg" id="hero-logo" alt="StratusPay"
-      style="height: auto; width: 35vw; max-width: 800px; margin-bottom: 0; border-radius: 40px; box-shadow: 0 40px 100px -20px rgba(0,0,0,0.7); position: relative; z-index: 1; border: 1px solid #F7931A;">
-
-    <div class="hero-content center flex-col" style="margin-top: -1vw; position: relative; z-index: 2;">
-      <h1 style="text-shadow: 0 8px 24px rgba(0,0,0,1);"><span style="color: #F7931A;">Payroll</span> infrastructure<br>for the <span style="color: #F7931A;">modern web.</span></h1>
-      <p class="lead" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8); color: #ccc;">Interactive, accurate, and
-        developer-friendly payroll API. Explore the possibilities below.</p>
-      <div class="flex" style="justify-content: center;">
-        <a href="#playground" class="btn btn-primary" id="startBtn">Start Exploring</a>
-      </div>
-    </div>
-  </header>
-
-  <hr class="section-divider">
-
-  <!-- Interactive Scenarios -->
-  <section class="container">
-    <div class="flex" style="justify-content: space-between; align-items: baseline;">
-      <h2>Explore <span style="color: #F7931A;"></span>Personas</span></h2>
-      <p class="text-muted">Click a specific card to preload the configuration.</p>
-    </div>
-
-    <div class="card-grid">
-      <!-- Card: Student -->
-      <div class="card" onclick="loadPersona('student')">
-        <div class="card-icon">🎓</div>
-        <h3>The Student</h3>
-        <p class="text-muted">Part-time work with Plan 1 student loan deduction.</p>
-      </div>
-
-      <!-- Card: High Earner -->
-      <div class="card" onclick="loadPersona('highEarner')">
-        <div class="card-icon">📈</div>
-        <h3>High Earner</h3>
-        <p class="text-muted">£150k+ salary tapering personal allowance.</p>
-      </div>
-
-      <!-- Card: Pensioner -->
-      <div class="card" onclick="loadPersona('pensioner')">
-        <div class="card-icon">🕰️</div>
-        <h3>The Pensioner</h3>
-        <p class="text-muted">State pension age, no NI contributions (Category C).</p>
-      </div>
-
-      <!-- Card: Low Income -->
-      <div class="card" onclick="loadPersona('lowIncome')">
-        <div class="card-icon">🛡️</div>
-        <h3>Low Income</h3>
-        <p class="text-muted">Below tax threshold, minimizing deductions.</p>
-      </div>
-
-      <!-- Card: Scottish Resident -->
-      <div class="card" onclick="loadPersona('scottish')">
-        <div class="card-icon">🏴󠁧󠁢󠁳󠁣󠁴󠁿</div>
-        <h3>Scottish Resident</h3>
-        <p class="text-muted">Standard rate taxpayer with Scottish tax codes (S prefix).</p>
-      </div>
-
-      <!-- Card: Married (M Suffix) -->
-      <div class="card" onclick="loadPersona('married')">
-        <div class="card-icon">💍</div>
-        <h3>Married Individual</h3>
-        <p class="text-muted">Uses Tax Code M to reflect Marriage Allowance transfer.</p>
-      </div>
-    </div>
-  </section>
-
-  <hr class="section-divider">
-
-  <!-- Main Playground -->
-  <section id="playground" class="playground">
-    <div class="container">
-      <div class="interface">
-
-        <!-- Sidebar: Inputs -->
-        <div class="sidebar">
-          <h3 style="margin-bottom: 24px; color: #fff;">Configuration</h3>
-
-          <div class="control-group">
-            <label>Annual Gross Salary</label>
-            <input type="number" id="annualGrossSalary" value="30000">
-          </div>
-
-          <div class="row">
-            <div class="col control-group">
-              <label>Tax Code</label>
-              <input type="text" id="taxCode" value="1257L">
-            </div>
-            <div class="col control-group">
-              <label>Pay Frequency</label>
-              <select id="payFrequency">
-                <option>Monthly</option>
-                <option>Weekly</option>
-                <option>Annual</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col control-group">
-              <label>Emp. Pension %</label>
-              <input type="number" id="employeePension" value="5">
-            </div>
-            <div class="col control-group">
-              <label>Pension Type</label>
-              <select id="pensionType">
-                <option>ReliefAtSource</option>
-                <option>SalarySacrifice</option>
-                <option>NetPayArrangement</option>
-                <option>None</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="config-bar">
-            <label>API Base URL</label>
-            <input id="apiBase" value="https://app-stratuspayapi-prototype-a8bhacf4dqhtgxag.ukwest-01.azurewebsites.net"
-              style="font-size: 0.8rem; color: #666;">
-          </div>
-        </div>
-
-        <!-- Main View: JSON Output & Visuals -->
-        <div class="main-view">
-          <div class="code-header">
-            <div class="tab">
-              <div class="dot active"></div>
-              <span>POST /api/v1/payroll/calculate</span>
-            </div>
-            <div class="tab">
-              <span id="latency" style="color: #666;">--ms</span>
-            </div>
-          </div>
-
-          <!-- Code Block (HighlightJS style) -->
-          <div class="code-content" id="codeBlock">
-            <!-- JSON will be injected here -->
-          </div>
-
-          <!-- Action Bar -->
-          <div class="action-bar">
-            <button class="btn btn-secondary" onclick="copyJson()"
-              style="height: 36px; padding: 0 16px; font-size: 0.85rem;">Copy JSON</button>
-            <button class="btn btn-primary" onclick="runCalculation()"
-              style="height: 36px; padding: 0 16px; font-size: 0.85rem; background: var(--accent); color: white; border: none;">Run
-              Request</button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Hidden elements from original for logic support -->
-      <input type="hidden" id="payPeriodDate" value="2025-06-01">
-      <input type="hidden" id="employerPension" value="3">
-    </div>
-  </section>
-
-  <hr class="section-divider">
-
-  <!-- Value Proposition -->
-  <section class="container center flex-col" style="padding: 80px 5%; text-align: center;">
-    <h2 style="font-size: 4rem; letter-spacing: -0.04em; margin-bottom: 32px; line-height: 1;">
-      <span
-        style="background: linear-gradient(180deg, #fff 0%, #888 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Faster.</span>
-      <span style="color: #F7931A;">Simpler.</span>
-    </h2>
-    <p class="lead" style="max-width: 750px; font-size: 1.25rem;">
-      Stop battling the pain points of annual payroll updates. Integrate StratusPay to handle the complexity, so you can
-      focus on adding the new features that sell your product.
+  
+  <div class="container" style="margin-top: 120px; margin-bottom: 80px;">
+    <h1 style="text-align: center; color: #F7931A;">API Documentation</h1>
+    <p class="lead" style="text-align: center;">
+      Welcome to the StratusPayAPI documentation. Here you'll find all the information you need to integrate with our payroll calculation engine.
     </p>
 
-    <!-- Collapsible Story -->
-    <div style="width: 100%; max-width: 800px; text-align: left;">
-      <details class="story-details">
-        <summary class="flex">
-          <span style="font-size: 1.25rem; font-weight: 600;">Our <span
-              style="color: #F7931A;"></span>Story</span></span>
-          <span class="icon">+</span>
-        </summary>
-        <div class="story-content">
-          <p style="margin-bottom: 16px;">
-            StratusPayAPI was born from years of deep industry experience within the HR and Payroll software sector.
-            We witnessed firsthand the recurring struggles that software providers face year after year:
-            the complex burden of upgrading payroll engines to comply with ever-changing legislation.
-          </p>
-          <p style="margin-bottom: 16px;">
-            Maintaining these systems requires niche, hard-to-find in-house skills and diverts valuable resources
-            away from core product innovation. Worse, these critical updates must be delivered under impossibly
-            tight statutory deadlines, creating annual cycles of stress and risk.
-          </p>
-          <p>
-            We realized there had to be a better way. We built StratusPayAPI to shoulder that burden—providing a
-            robust, always-compliant infrastructure so you never have to worry about payroll legislation again.
-          </p>
+    <hr class="section-divider">
+
+    <section id="endpoint-calculate">
+      <h2>POST /api/v1/payroll/calculate</h2>
+      <p>This is the primary endpoint for calculating payroll. It takes a detailed request object and returns a comprehensive breakdown of pay, deductions, and contributions.</p>
+
+      <div class="card" style="margin-top: 24px;">
+        <h3 style="color: #F7931A;">Request Parameters</h3>
+        <table class="table" style="width: 100%; border-collapse: collapse; text-align: left;">
+          <thead>
+            <tr>
+              <th style="padding: 12px; border-bottom: 1px solid var(--border);">Parameter</th>
+              <th style="padding: 12px; border-bottom: 1px solid var(--border);">Type</th>
+              <th style="padding: 12px; border-bottom: 1px solid var(--border);">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">annualGrossSalary</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">number</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's annual gross salary.</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">taxCode</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's tax code (e.g., "1257L").</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">payFrequency</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The pay frequency ("Monthly", "Weekly", "Annual").</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">payPeriodDate</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The date of the pay period in YYYY-MM-DD format.</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">employeeContributionPercentage</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">number</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's pension contribution percentage.</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">employerContributionPercentage</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">number</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employer's pension contribution percentage.</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">pensionType</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The pension type ("ReliefAtSource", "SalarySacrifice", "NetPayArrangement", "None").</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan1</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 1 student loan.</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan2</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 2 student loan.</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan4</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 4 student loan.</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan5</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 5 student loan.</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPostgraduate</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a postgraduate loan.</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isScottishResident</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is a Scottish resident.</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isBlindPerson</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is registered blind.</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isMarriageAllowanceTransferor</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is transferring the marriage allowance.</td></tr>
+            <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isMarriageAllowanceRecipient</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is receiving the marriage allowance.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <h3 style="color: #F7931A;">Example Request</h3>
+        <div class="code-content" style="background-color: #1A1B1D; border-radius: 8px; padding: 16px;">
+          <pre style="margin: 0; font-family: var(--font-mono); font-size: 0.875rem;"><code class="language-json">{
+  "uniqueEmployeeId": "DEMO-USER",
+  "annualGrossSalary": 30000,
+  "taxCode": "1257L",
+  "payFrequency": "Monthly",
+  "payPeriodDate": "2025-06-01",
+  "employeeContributionPercentage": 5,
+  "employerContributionPercentage": 3,
+  "pensionType": "ReliefAtSource",
+  "niCategory": "A",
+  "isPlan1": false,
+  "isScottishResident": false
+}</code></pre>
         </div>
-      </details>
-    </div>
-  </section>
+      </div>
+    </section>
+  </div>
 
-  <hr class="section-divider">
-
-  <!-- Contact & Footer -->
-  <footer class="container center flex-col" style="padding: 80px 5%;">
-    <h2 style="font-size: 2.5rem; margin-bottom: 24px;">Ready to simplify your payroll?</h2>
-    <p class="lead" style="margin-bottom: 32px;">
-      Get in touch to discuss how StratusPayAPI can integrate with your platform.
-    </p>
-    <a href="mailto:stratuspayuk@gmail.com" class="btn btn-primary" style="margin-bottom: 40px;">
-      Contact Us
-    </a>
-
-    <div class="footer-links">
-      <span>&copy; 2025 Stratogenie Ltd.</span>
-      in <a href="#" style="color: inherit; text-decoration: none;">Terms & Conditions</a>
-      <a href="mailto:stratuspayuk@gmail.com" style="color: inherit; text-decoration: none;">stratuspayuk@gmail.com</a>
-    </div>
-  </footer>
 
   <script>
     // Scroll Effect for Hero Logo
@@ -926,7 +773,7 @@
         json = JSON.stringify(json, undefined, 2);
       }
       json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+      return json.replace(/("(\u[a-zA-Z0-9]{4}|\[^u]|[^"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
         var cls = 'json-number';
         if (/^"/.test(match)) {
           if (/:$/.test(match)) {
