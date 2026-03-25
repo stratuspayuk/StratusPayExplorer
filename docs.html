@@ -598,6 +598,7 @@
         </thead>
         <tbody>
         <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">annualGrossSalary</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">number</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's annual gross salary.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">currency</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The currency for the payroll calculation ("GBP", "USD", "EUR").</td></tr>
         <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">taxCode</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's tax code (e.g., "1257L").</td></tr>
         <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">payFrequency</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The pay frequency ("Monthly", "Weekly", "Annual").</td></tr>
         <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">payPeriodDate</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The date of the pay period in YYYY-MM-DD format.</td></tr>
@@ -621,6 +622,13 @@
             <div class="accordion-content">
                 <p><strong>Type:</strong> number</p>
                 <p><strong>Description:</strong> The employee's annual gross salary.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">currency</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> string</p>
+                <p><strong>Description:</strong> The currency for the payroll calculation ("GBP", "USD", "EUR").</p>
             </div>
         </details>
         <details class="accordion-item">
@@ -738,6 +746,7 @@
           <pre style="margin: 0; font-family: var(--font-mono); font-size: 0.875rem;"><code class="language-json">{
   "uniqueEmployeeId": "DEMO-USER",
   "annualGrossSalary": 30000,
+  "currency": "GBP",
   "taxCode": "1257L",
   "payFrequency": "Monthly",
   "payPeriodDate": "2025-06-01",

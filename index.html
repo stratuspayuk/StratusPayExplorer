@@ -524,10 +524,88 @@
       font-size: 1.1rem;
       color: #FFFFFF; /* White text for contrast */
     }
+
+    .currency-btn.active {
+      border-color: #F7931A;
+      color: #F7931A;
+      background: rgba(247, 147, 26, 0.1);
+    }
+
+    /* Pop-out Styles */
+    .release-popout-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+    .release-popout {
+      background: var(--surface);
+      border: 1px solid #F7931A;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 20px rgba(247, 147, 26, 0.3);
+      transform: translateY(0);
+      transition: transform 0.3s ease;
+    }
+    .release-popout h2 {
+      color: #FFFFFF;
+      margin-bottom: 16px;
+      font-size: 2rem;
+    }
+    .release-popout .badge {
+      display: inline-block;
+      background: rgba(247, 147, 26, 0.2);
+      color: #F7931A;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .release-popout p {
+      color: #ccc;
+      margin-bottom: 24px;
+      line-height: 1.6;
+      font-size: 1.1rem;
+    }
+    .release-popout-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .release-popout-hidden .release-popout {
+      transform: translateY(20px);
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- New Release Popout -->
+  <div id="releasePopout" class="release-popout-overlay" onclick="closePopout()">
+    <div class="release-popout" onclick="event.stopPropagation()">
+      <div class="badge">New Release v1.0.1.4</div>
+      <h2>Multicurrency Support 🌍</h2>
+      <p>
+        StratusPayAPI now fully supports multicurrency payroll calculations! 
+        You can calculate payroll in GBP (£), USD ($), or EUR (€). 
+        This enables you to expand your product globally without worrying about local currency conversion and formatting.
+      </p>
+      <button class="btn btn-primary" onclick="closePopout()" style="width: 100%;">Got it, let's explore</button>
+    </div>
+  </div>
 
   <nav class="new-sticky-header">
     <div class="container new-sticky-header-inner" style="justify-content: space-between;">
@@ -621,6 +699,15 @@
         <!-- Sidebar: Inputs -->
         <div class="sidebar">
           <h3 style="margin-bottom: 24px; color: #fff;">Configuration</h3>
+
+          <div class="control-group">
+            <label>Currency</label>
+            <div class="flex" style="gap: 8px;">
+               <button class="btn btn-secondary currency-btn active" data-currency="GBP" onclick="setCurrency('GBP')" style="flex: 1; height: 36px; padding: 0;">£ GBP</button>
+               <button class="btn btn-secondary currency-btn" data-currency="USD" onclick="setCurrency('USD')" style="flex: 1; height: 36px; padding: 0;">$ USD</button>
+               <button class="btn btn-secondary currency-btn" data-currency="EUR" onclick="setCurrency('EUR')" style="flex: 1; height: 36px; padding: 0;">€ EUR</button>
+            </div>
+          </div>
 
           <div class="control-group">
             <label>Annual Gross Salary</label>
@@ -782,6 +869,7 @@
 
     // State
     const state = {
+      currency: 'GBP',
       isPlan1: false,
       isScottishResident: false,
       niCategory: 'A'
@@ -793,6 +881,26 @@
 
     // Initial Render
     updateJsonView();
+
+    function closePopout() {
+      document.getElementById('releasePopout').classList.add('release-popout-hidden');
+    }
+
+    function setCurrency(curr) {
+      state.currency = curr;
+      document.querySelectorAll('.currency-btn').forEach(btn => {
+        if (btn.getAttribute('data-currency') === curr) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      updateJsonView();
+      // add visual feedback
+      const wrap = document.querySelector('.currency-btn').parentElement;
+      wrap.classList.add('highlight-change');
+      setTimeout(() => wrap.classList.remove('highlight-change'), 500);
+    }
 
     // Event Listeners for real-time updates
     ['annualGrossSalary', 'taxCode', 'payFrequency', 'employeePension', 'pensionType'].forEach(id => {
@@ -807,6 +915,7 @@
     // Personas Logic
     function loadPersona(type) {
       // Reset state
+      setCurrency('GBP'); // default to GBP for persona
       state.isPlan1 = false;
       state.isScottishResident = false;
       state.niCategory = 'A';
@@ -852,6 +961,7 @@
       return {
         uniqueEmployeeId: 'DEMO-USER',
         annualGrossSalary: Number($('annualGrossSalary').value),
+        currency: state.currency,
         taxCode: $('taxCode').value,
         payFrequency: $('payFrequency').value,
         payPeriodDate: $('payPeriodDate').value,
