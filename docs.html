@@ -1,0 +1,962 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>StratusPayAPI Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0D0E10;
+      --fg: #ffffff;
+      --surface: #0D0E10;
+      --border: #333333;
+      --accent: #0070f3;
+      /* Vercel Blue */
+      --accent-glow: rgba(0, 112, 243, 0.5);
+      --success: #00e054;
+      --warning: #f5a623;
+      --error: #ff0000;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --header-height: 72px; /* Custom property for fixed header height, increased by 20% */
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #1A1B1D;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2A2B2D;
+    }
+
+    /* Layout Utilities */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 5%;
+      width: 100%;
+    }
+
+    .grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .flex {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .flex-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .center {
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Typography */
+    h1 {
+      font-size: 4rem;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      font-weight: 800;
+      color: #FFFFFF;
+      text-shadow: 0 2px 5px rgba(224, 224, 224, 0.2);
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    h2 {
+      font-size: 2rem;
+      letter-spacing: -0.02em;
+      margin: 0 0 16px 0;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+    }
+
+    p.lead {
+      font-size: 1.25rem;
+      color: #888;
+      max-width: 600px;
+      margin: 0 auto 40px auto;
+    }
+
+    @media (max-width: 768px) {
+      p.lead {
+        font-size: 1rem;
+        margin-bottom: 24px;
+      }
+    }
+
+    .text-muted {
+      color: #888;
+      font-size: 0.875rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 0 0 120px 0; /* Adjusted padding-top to 0, margin-top will create the gap */
+      position: relative;
+      overflow: hidden;
+      background: #0D0E10;
+      margin-top: var(--header-height); /* Add margin-top equal to header height */
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 60px 0;
+      }
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200%;
+      height: 200%;
+      background: none;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 24px;
+      height: 48px;
+      border-radius: 999px;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: #D5760F;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #e08214;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(247, 147, 26, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border-color: #333;
+      color: #ccc;
+    }
+
+    .btn-secondary:hover {
+      border-color: #fff;
+      color: #fff;
+    }
+
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin: 60px 0;
+    }
+
+    @media (max-width: 768px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+        /* Force single column on mobile */
+        margin: 40px 0;
+        gap: 16px;
+      }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      border-color: #F7931A;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px -10px rgba(247, 147, 26, 0.3);
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      background: #1A1B1D;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 1.5rem;
+    }
+
+    /* Playground */
+    .playground {
+      border-top: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--bg) 0%, #0D0E10 100%);
+      padding: 30px 0;
+    }
+
+    .interface {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 900px) {
+      .interface {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+
+    .sidebar {
+      padding: 24px;
+      border-right: 1px solid var(--border);
+      background: #0D0E10;
+    }
+
+    .main-view {
+      padding: 0;
+      background: #0D0E10;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Form Elements */
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      color: #888;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    input,
+    select {
+      width: 100%;
+      background: #1A1B1D;
+      border: 1px solid #333;
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-family: var(--font-font-sans);
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .col {
+      flex: 1;
+    }
+
+    /* Code View */
+    .code-header {
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0D0E10;
+    }
+
+    .tab {
+      font-size: 0.8rem;
+      color: #888;
+      font-family: var(--font-mono);
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #1A1B1D;
+    }
+
+    .dot.active {
+      background: var(--success);
+      box-shadow: 0 0 8px var(--success);
+    }
+
+    .code-content {
+      flex: 1;
+      padding: 24px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: #a5d6ff;
+      overflow: auto;
+      max-height: 500px;
+    }
+
+    .json-key {
+      color: #7ee787;
+    }
+
+    .json-key.has-tooltip {
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      cursor: help;
+      position: relative;
+    }
+
+    .json-key.has-tooltip:hover::after {
+      content: attr(title);
+      position: absolute;
+      left: 100%;
+      top: 0;
+      background-color: #333;
+      color: #fff;
+      padding: 5px;
+      border-radius: 3px;
+      z-index: 1;
+      white-space: nowrap;
+      margin-left: 10px;
+    }
+
+    .json-string {
+      color: #a5d6ff;
+    }
+
+    .json-number {
+      color: #79c0ff;
+    }
+
+    .json-boolean {
+      color: #ff7b72;
+    }
+
+    /* Floating functional bar */
+    .action-bar {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      background: #0D0E10;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* Config Bar */
+    .config-bar {
+      margin-top: 24px;
+      padding-top: 24px;
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 112, 243, 0.4);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(0, 112, 243, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 112, 243, 0);
+      }
+    }
+
+    .animate-pulse {
+      animation: pulse 2s infinite;
+    }
+
+    .highlight-change {
+      animation: flash 1s ease;
+    }
+
+    @keyframes flash {
+      0% {
+        background-color: rgba(0, 112, 243, 0.2);
+      }
+
+      100% {
+        background-color: transparent;
+      }
+    }
+
+    /* Footer Styles */
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      color: #666;
+      font-size: 0.9rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .section-divider {
+      border: 0;
+      border-top: 2px solid #F7931A;
+      margin: 40px auto;
+      width: 50%;
+    }
+
+    @media (max-width: 768px) {
+      .footer-links {
+        font-size: 0.75rem;
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #hero-logo {
+        width: 80vw !important;
+      }
+    }
+
+    .new-sticky-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #000000; /* Pure black */
+      z-index: 1000;
+      padding: 10px 0; /* Vertical padding, horizontal handled by .container */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    }
+
+    .new-sticky-header-inner {
+      display: flex;
+      align-items: center;
+      gap: 4px; /* 4px gap between logo and text */
+    }
+
+    .new-header-logo {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      object-fit: contain;
+      /* Background color is already in logo.jpg styling */
+    }
+
+    .new-header-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #FFFFFF; /* White text for contrast */
+    }
+    @media (max-width: 768px) {
+      .card {
+        overflow-x: auto;
+      }
+      table {
+        white-space: nowrap;
+      }
+    }
+    .mobile-only {
+      display: none;
+    }
+    .accordion-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .accordion-header {
+      padding: 16px 0;
+      cursor: pointer;
+      font-weight: 600;
+      list-style: none;
+    }
+    .accordion-content {
+      padding-bottom: 16px;
+    }
+    @media (max-width: 768px) {
+      .desktop-only {
+        display: none;
+      }
+      .mobile-only {
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="new-sticky-header">
+    <div class="container new-sticky-header-inner" style="justify-content: space-between;">
+      <div class="flex" style="gap: 16px;">
+        <img src="logo.jpg" alt="StratusPay Logo" class="new-header-logo">
+        <span class="new-header-title">StratusPayAPI</span>
+      </div>
+      <div class="flex" style="gap: 24px;">
+        <a href="index.html" style="color: #fff; text-decoration: none; font-size: 0.9rem;">Explorer</a>
+        <a href="docs.html" style="color: #F7931A; text-decoration: none; font-size: 0.9rem;">Docs</a>
+      </div>
+    </div>
+  </nav>
+
+  
+  <div class="container" style="margin-top: 120px; margin-bottom: 80px;">
+    <h1 style="text-align: center; color: #F7931A;">API Documentation</h1>
+    <p class="lead" style="text-align: center;">
+      Welcome to the StratusPayAPI documentation. Here you'll find all the information you need to integrate with our payroll calculation engine.
+    </p>
+
+    <hr class="section-divider">
+
+    <section id="endpoint-calculate">
+      <h2>POST /api/v1/payroll/calculate</h2>
+      <p>This is the primary endpoint for calculating payroll. It takes a detailed request object and returns a comprehensive breakdown of pay, deductions, and contributions.</p>
+
+      <div class="card" style="margin-top: 24px;">
+    <h3 style="color: #F7931A;">Request Parameters</h3>
+    <table class="table desktop-only" style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+        <tr>
+            <th style="padding: 12px; border-bottom: 1px solid var(--border);">Parameter</th>
+            <th style="padding: 12px; border-bottom: 1px solid var(--border);">Type</th>
+            <th style="padding: 12px; border-bottom: 1px solid var(--border);">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">annualGrossSalary</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">number</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's annual gross salary.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">currency</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The currency for the payroll calculation ("GBP", "USD", "EUR").</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">taxCode</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's tax code (e.g., "1257L").</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">payFrequency</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The pay frequency ("Monthly", "Weekly", "Annual").</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">payPeriodDate</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The date of the pay period in YYYY-MM-DD format.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">employeeContributionPercentage</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">number</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employee's pension contribution percentage.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">employerContributionPercentage</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">number</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The employer's pension contribution percentage.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">pensionType</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">string</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">The pension type ("ReliefAtSource", "SalarySacrifice", "NetPayArrangement", "None").</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan1</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 1 student loan.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan2</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 2 student loan.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan4</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 4 student loan.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPlan5</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a Plan 5 student loan.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isPostgraduate</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee has a postgraduate loan.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isScottishResident</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is a Scottish resident.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isBlindPerson</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is registered blind.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isMarriageAllowanceTransferor</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is transferring the marriage allowance.</td></tr>
+        <tr><td style="padding: 12px; border-bottom: 1px solid var(--border);">isMarriageAllowanceRecipient</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">boolean</td><td style="padding: 12px; border-bottom: 1px solid var(--border);">Whether the employee is receiving the marriage allowance.</td></tr>
+        </tbody>
+    </table>
+    <div class="mobile-only">
+        <details class="accordion-item">
+            <summary class="accordion-header">annualGrossSalary</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> number</p>
+                <p><strong>Description:</strong> The employee's annual gross salary.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">currency</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> string</p>
+                <p><strong>Description:</strong> The currency for the payroll calculation ("GBP", "USD", "EUR").</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">taxCode</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> string</p>
+                <p><strong>Description:</strong> The employee's tax code (e.g., "1257L").</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">payFrequency</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> string</p>
+                <p><strong>Description:</strong> The pay frequency ("Monthly", "Weekly", "Annual").</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">payPeriodDate</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> string</p>
+                <p><strong>Description:</strong> The date of the pay period in YYYY-MM-DD format.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">employeeContributionPercentage</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> number</p>
+                <p><strong>Description:</strong> The employee's pension contribution percentage.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">employerContributionPercentage</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> number</p>
+                <p><strong>Description:</strong> The employer's pension contribution percentage.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">pensionType</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> string</p>
+                <p><strong>Description:</strong> The pension type ("ReliefAtSource", "SalarySacrifice", "NetPayArrangement", "None").</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isPlan1</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee has a Plan 1 student loan.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isPlan2</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee has a Plan 2 student loan.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isPlan4</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee has a Plan 4 student loan.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isPlan5</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee has a Plan 5 student loan.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isPostgraduate</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee has a postgraduate loan.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isScottishResident</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee is a Scottish resident.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isBlindPerson</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee is registered blind.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isMarriageAllowanceTransferor</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee is transferring the marriage allowance.</p>
+            </div>
+        </details>
+        <details class="accordion-item">
+            <summary class="accordion-header">isMarriageAllowanceRecipient</summary>
+            <div class="accordion-content">
+                <p><strong>Type:</strong> boolean</p>
+                <p><strong>Description:</strong> Whether the employee is receiving the marriage allowance.</p>
+            </div>
+        </details>
+    </div>
+</div>
+
+
+      <div class="card" style="margin-top: 24px;">
+        <h3 style="color: #F7931A;">Example Request</h3>
+        <div class="code-content" style="background-color: #1A1B1D; border-radius: 8px; padding: 16px;">
+          <pre style="margin: 0; font-family: var(--font-mono); font-size: 0.875rem;"><code class="language-json">{
+  "uniqueEmployeeId": "DEMO-USER",
+  "annualGrossSalary": 30000,
+  "currency": "GBP",
+  "taxCode": "1257L",
+  "payFrequency": "Monthly",
+  "payPeriodDate": "2025-06-01",
+  "employeeContributionPercentage": 5,
+  "employerContributionPercentage": 3,
+  "pensionType": "ReliefAtSource",
+  "niCategory": "A",
+  "isPlan1": false,
+  "isScottishResident": false
+}</code></pre>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  <script>
+    // Scroll Effect for Hero Logo
+    window.addEventListener('scroll', () => {
+      const logo = document.getElementById('hero-logo');
+      if (logo) {
+        const scrolled = window.scrollY;
+        // Fade out quickly (within first 300px)
+        const opacity = Math.max(0, 1 - (scrolled / 300));
+        // Parallax / Scale effect
+        const scale = Math.max(0.8, 1 - (scrolled / 1000));
+
+        logo.style.opacity = opacity;
+        logo.style.transform = `scale(${scale})`;
+
+        // Hide completely if scrolled past to avoid click interactions
+        logo.style.visibility = opacity <= 0 ? 'hidden' : 'visible';
+      }
+    });
+
+    // State
+    const state = {
+      isPlan1: false,
+      isScottishResident: false,
+      niCategory: 'A'
+    };
+
+    // DOM Elements
+    const $ = id => document.getElementById(id);
+    const codeBlock = $('codeBlock');
+
+    // Initial Render
+    updateJsonView();
+
+    // Event Listeners for real-time updates
+    ['annualGrossSalary', 'taxCode', 'payFrequency', 'employeePension', 'pensionType'].forEach(id => {
+      $(id).addEventListener('input', () => {
+        updateJsonView();
+        // Visual feedback
+        $(id).parentElement.classList.add('highlight-change');
+        setTimeout(() => $(id).parentElement.classList.remove('highlight-change'), 500);
+      });
+    });
+
+    // Personas Logic
+    function loadPersona(type) {
+      // Reset state
+      state.isPlan1 = false;
+      state.isScottishResident = false;
+      state.niCategory = 'A';
+
+      switch (type) {
+        case 'student':
+          $('annualGrossSalary').value = 28000;
+          $('taxCode').value = '1257L';
+          state.isPlan1 = true;
+          break;
+        case 'highEarner':
+          $('annualGrossSalary').value = 160000;
+          $('taxCode').value = '0T'; // Reduced PA
+          break;
+        case 'pensioner':
+          $('annualGrossSalary').value = 18000;
+          $('taxCode').value = '1257L';
+          $('employeePension').value = 0;
+          state.niCategory = 'C';
+          break;
+        case 'lowIncome':
+          $('annualGrossSalary').value = 11000;
+          $('taxCode').value = '1257L';
+          break;
+        case 'scottish':
+          $('annualGrossSalary').value = 35000;
+          $('taxCode').value = 'S1257L';
+          state.isScottishResident = true;
+          break;
+        case 'married':
+          $('annualGrossSalary').value = 45000;
+          $('taxCode').value = '1257M';
+          break;
+      }
+
+      // visual feedback
+      updateJsonView();
+      document.getElementById('playground').scrollIntoView({ behavior: 'smooth' });
+      runCalculation();
+    }
+
+    function buildRequest() {
+      return {
+        uniqueEmployeeId: 'DEMO-USER',
+        annualGrossSalary: Number($('annualGrossSalary').value),
+        taxCode: $('taxCode').value,
+        payFrequency: $('payFrequency').value,
+        payPeriodDate: $('payPeriodDate').value,
+        employeeContributionPercentage: Number($('employeePension').value),
+        employerContributionPercentage: Number($('employerPension').value),
+        pensionType: $('pensionType').value,
+        niCategory: state.niCategory,
+        isPlan1: state.isPlan1,
+        isScottishResident: state.isScottishResident
+      };
+    }
+
+    function updateJsonView(responseData = null) {
+      if (!responseData) {
+        // Show Request Preview
+        const req = buildRequest();
+        codeBlock.innerHTML = syntaxHighlight(req);
+        codeBlock.style.opacity = '0.7'; // Dim slightly to indicate it's a request preview
+      } else {
+        // Show Response
+        codeBlock.innerHTML = syntaxHighlight(responseData);
+        codeBlock.style.opacity = '1';
+      }
+    }
+
+    async function runCalculation() {
+      const btn = document.querySelector('button.btn-primary');
+      const originalText = btn.textContent;
+      btn.textContent = "Processing...";
+      btn.style.opacity = "0.7";
+
+      const start = Date.now();
+      const apiBase = $('apiBase').value.replace(/\/$/, '');
+      const url = apiBase + '/api/v1/payroll/calculate';
+
+      try {
+        const resp = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(buildRequest())
+        });
+
+        const data = await resp.json();
+        const latency = Date.now() - start;
+        $('latency').textContent = latency + 'ms';
+        $('latency').style.color = latency < 300 ? 'var(--success)' : 'var(--warning)';
+
+        updateJsonView(data);
+
+      } catch (e) {
+        codeBlock.textContent = "Error: " + e.message;
+        codeBlock.style.color = "var(--error)";
+      }
+
+      btn.textContent = originalText;
+      btn.style.opacity = "1";
+    }
+
+    function syntaxHighlight(json) {
+      const tooltips = {
+        "grossPay": "The total amount of money an employee receives before any taxes and deductions are taken out.",
+        "netPay": "The amount of money an employee takes home after all deductions have been taken out.",
+        "incomeTax": "The amount of tax you pay on your income.",
+        "nationalInsurance": "A contribution you pay to build up your entitlement to certain state benefits, such as the State Pension.",
+        "employeePensionContribution": "The amount you contribute to your pension from your salary.",
+        "employerPensionContribution": "The amount your employer contributes to your pension.",
+        "studentLoan": "The amount deducted for student loan repayments.",
+        "taxablePay": "The amount of your pay that you pay tax on."
+      };
+
+      if (typeof json != 'string') {
+        json = JSON.stringify(json, undefined, 2);
+      }
+      json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return json.replace(/("(\u[a-zA-Z0-9]{4}|\[^u]|[^"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'json-number';
+        if (/^"/.test(match)) {
+          if (/:$/.test(match)) {
+            cls = 'json-key';
+            const key = match.slice(1, -2); // extract key
+            if (tooltips[key]) {
+              return '<span class="' + cls + ' has-tooltip" title="' + tooltips[key] + '">' + match + '</span>';
+            }
+          } else {
+            cls = 'json-string';
+          }
+        } else if (/true|false/.test(match)) {
+          cls = 'json-boolean';
+        } else if (/null/.test(match)) {
+          cls = 'json-null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+      });
+    }
+
+    function copyJson() {
+      navigator.clipboard.writeText(JSON.stringify(buildRequest(), null, 2));
+    }
+
+    // initial trigger
+    updateJsonView();
+
+  </script>
+</body>
+
+</html>
